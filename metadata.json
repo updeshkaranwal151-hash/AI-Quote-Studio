@@ -1,0 +1,5 @@
+{
+  "name": "AI Quote Studio",
+  "description": "An application where users can browse, create, and edit visually stunning quote images. Features a user panel for viewing and uploading, an admin panel for AI-powered generation, and an image editor for creative modifications.",
+  "requestFramePermissions": []
+}
