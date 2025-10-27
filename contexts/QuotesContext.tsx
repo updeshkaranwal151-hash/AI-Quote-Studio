@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { QuoteContent } from '../types';
+import { QuoteContent, Comment } from '../types';
 import { INITIAL_QUOTES } from '../data/mock';
 
 interface ToastMessage {
@@ -11,15 +11,28 @@ interface QuotesContextType {
   quotes: QuoteContent[];
   likedQuotes: Set<string>;
   toasts: ToastMessage[];
-  addQuote: (newQuoteData: Omit<QuoteContent, 'id' | 'likes' | 'createdAt' | 'authorId'>) => void;
+  comments: Record<string, Comment[]>;
+  addQuote: (newQuoteData: Omit<QuoteContent, 'id' | 'likes' | 'createdAt'>) => void;
   toggleLike: (quoteId: string) => void;
   removeToast: (id: number) => void;
+  addComment: (quoteId: string, text: string, authorId: string) => void;
+  deleteQuote: (quoteId: string) => void;
+  deleteQuotesByAuthor: (authorId: string) => void;
 }
 
 export const QuotesContext = createContext<QuotesContextType | undefined>(undefined);
 
 export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [quotes, setQuotes] = useState<QuoteContent[]>(INITIAL_QUOTES);
+  const [quotes, setQuotes] = useState<QuoteContent[]>(() => {
+    try {
+      const storedQuotes = window.localStorage.getItem('quotes');
+      return storedQuotes ? JSON.parse(storedQuotes) : INITIAL_QUOTES;
+    } catch (error) {
+      console.error(error);
+      return INITIAL_QUOTES;
+    }
+  });
+
   const [likedQuotes, setLikedQuotes] = useState<Set<string>>(() => {
     try {
       const item = window.localStorage.getItem('likedQuotes');
@@ -30,7 +43,25 @@ export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   });
 
+  const [comments, setComments] = useState<Record<string, Comment[]>>(() => {
+    try {
+      const storedComments = window.localStorage.getItem('comments');
+      return storedComments ? JSON.parse(storedComments) : {};
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  });
+
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('quotes', JSON.stringify(quotes));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [quotes]);
 
   useEffect(() => {
     try {
@@ -39,6 +70,14 @@ export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       console.error(error);
     }
   }, [likedQuotes]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('comments', JSON.stringify(comments));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [comments]);
 
   const addToast = (message: string) => {
     const id = Date.now();
@@ -50,13 +89,12 @@ export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   };
 
-  const addQuote = (newQuoteData: Omit<QuoteContent, 'id' | 'likes' | 'createdAt' | 'authorId'>) => {
+  const addQuote = (newQuoteData: Omit<QuoteContent, 'id' | 'likes' | 'createdAt'>) => {
     const newQuote: QuoteContent = {
       ...newQuoteData,
       id: new Date().toISOString() + Math.random(),
-      likes: Math.floor(Math.random() * 200), // Give it some initial likes
+      likes: 0,
       createdAt: Date.now(),
-      authorId: 'user-ai',
     };
     setQuotes((prevQuotes) => [newQuote, ...prevQuotes]);
     addToast(`New quote created!`);
@@ -84,9 +122,61 @@ export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return newLiked;
     });
   };
+
+  const addComment = (quoteId: string, text: string, authorId: string) => {
+    const newComment: Comment = {
+      id: new Date().toISOString() + Math.random(),
+      authorId,
+      text,
+      createdAt: Date.now(),
+    };
+    setComments((prevComments) => ({
+      ...prevComments,
+      [quoteId]: [...(prevComments[quoteId] || []), newComment],
+    }));
+    addToast('Comment posted!');
+  };
+
+  const deleteQuote = (quoteId: string) => {
+    setQuotes(prev => prev.filter(q => q.id !== quoteId));
+    setLikedQuotes(prev => {
+        const newLiked = new Set(prev);
+        newLiked.delete(quoteId);
+        return newLiked;
+    });
+    setComments(prev => {
+        const newComments = { ...prev };
+        delete newComments[quoteId];
+        return newComments;
+    });
+    addToast('Quote deleted successfully.');
+  };
+
+  const deleteQuotesByAuthor = (authorId: string) => {
+    const quotesToDelete = quotes.filter(q => q.authorId === authorId);
+    const quoteIdsToDelete = new Set(quotesToDelete.map(q => q.id));
+
+    setQuotes(prev => prev.filter(q => q.authorId !== authorId));
+    
+    setLikedQuotes(prev => {
+        const newLiked = new Set(prev);
+        quoteIdsToDelete.forEach(id => newLiked.delete(id));
+        return newLiked;
+    });
+
+    setComments(prev => {
+        const newComments = { ...prev };
+        // FIX: The `forEach` loop has issues with type inference for the `delete` operator. 
+        // A `for...of` loop correctly infers the type of `id` as string.
+        for (const id of quoteIdsToDelete) {
+          delete newComments[id];
+        }
+        return newComments;
+    });
+  };
   
   return (
-    <QuotesContext.Provider value={{ quotes, likedQuotes, toasts, addQuote, toggleLike, removeToast }}>
+    <QuotesContext.Provider value={{ quotes, likedQuotes, toasts, comments, addQuote, toggleLike, removeToast, addComment, deleteQuote, deleteQuotesByAuthor }}>
       {children}
     </QuotesContext.Provider>
   );

@@ -11,12 +11,3 @@ export const fileToBase64 = (file: File): Promise<{ base64: string, mimeType: st
     reader.onerror = error => reject(error);
   });
 };
-
-export const dataURLToGenerativePart = (dataUrl: string) => {
-    const [header, base64Data] = dataUrl.split(',');
-    const mimeType = header.match(/:(.*?);/)?.[1] || 'image/jpeg';
-    return {
-        base64: base64Data,
-        mimeType: mimeType,
-    };
-};

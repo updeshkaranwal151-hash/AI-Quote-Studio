@@ -6,9 +6,13 @@ interface QuoteGridProps {
   quotes: QuoteContent[];
   likedQuotes: Set<string>;
   onLike: (id: string) => void;
+  onCardClick: (quote: QuoteContent) => void;
+  onAuthorClick: (authorId: string) => void;
+  showDelete?: boolean;
+  onDelete?: (id: string) => void;
 }
 
-const QuoteGrid: React.FC<QuoteGridProps> = ({ quotes, likedQuotes, onLike }) => {
+const QuoteGrid: React.FC<QuoteGridProps> = ({ quotes, likedQuotes, onLike, onCardClick, onAuthorClick, showDelete, onDelete }) => {
   if (quotes.length === 0) {
     return (
       <div className="text-center py-20">
@@ -26,6 +30,10 @@ const QuoteGrid: React.FC<QuoteGridProps> = ({ quotes, likedQuotes, onLike }) =>
           quote={quote} 
           isLiked={likedQuotes.has(quote.id)}
           onLike={onLike}
+          onCardClick={onCardClick}
+          onAuthorClick={onAuthorClick}
+          showDelete={showDelete}
+          onDelete={onDelete}
         />
       ))}
     </div>

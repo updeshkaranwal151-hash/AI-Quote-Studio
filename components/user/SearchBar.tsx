@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const allCategories = ['All', ...CATEGORIES];
 
   return (
-    <div className="px-6 pb-4 flex flex-col sm:flex-row items-center gap-4 sticky top-[72px] bg-gray-900/80 backdrop-blur-sm z-30 py-4">
+    <div className="px-6 py-4 flex flex-col sm:flex-row items-center gap-4 border-t border-b border-gray-800 mt-6">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
           {allCategories.map((category) => (
               <button
