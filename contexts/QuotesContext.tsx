@@ -164,14 +164,10 @@ export const QuotesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return newLiked;
     });
 
+    // Fix: Rebuild the comments object to avoid issues with the delete operator in a loop.
     setComments(prev => {
-        const newComments = { ...prev };
-        // FIX: The `forEach` loop has issues with type inference for the `delete` operator. 
-        // A `for...of` loop correctly infers the type of `id` as string.
-        for (const id of quoteIdsToDelete) {
-          delete newComments[id];
-        }
-        return newComments;
+        const newEntries = Object.entries(prev).filter(([id]) => !quoteIdsToDelete.has(id));
+        return Object.fromEntries(newEntries);
     });
   };
   

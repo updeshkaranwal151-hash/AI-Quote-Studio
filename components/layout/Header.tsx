@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ setView }) => {
 
   return (
     <header className="bg-gray-800/50 backdrop-blur-sm sticky top-0 z-40 shadow-lg shadow-black/20 border-b border-gray-700">
-      <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
+      <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white tracking-wider">
           <span className="text-blue-400">Quote</span> Studio
         </h1>

@@ -67,7 +67,7 @@ const AdminPanel: React.FC = () => {
     });
 
     return (
-        <div className="bg-slate-900 text-slate-100 -m-8 p-4 sm:p-6 lg:p-8 animate-fade-in-up">
+        <div className="bg-slate-900 text-slate-100 p-4 sm:p-6 animate-fade-in-up">
             <div className="container mx-auto">
                 <h2 className="text-4xl font-extrabold text-white mb-2 tracking-tight">Mission Control</h2>
                 <p className="text-slate-400 mb-8">Live overview of the Quote Studio ecosystem.</p>
@@ -114,22 +114,22 @@ const AdminPanel: React.FC = () => {
                         <table className="w-full text-left">
                             <thead className="bg-slate-700/50 text-xs text-slate-300 uppercase tracking-wider">
                                 <tr>
-                                    <th className="p-4 font-semibold">User</th>
-                                    <th className="p-4 text-center font-semibold">Quotes</th>
-                                    <th className="p-4 text-center font-semibold">Likes Received</th>
-                                    <th className="p-4 font-semibold">Join Date</th>
+                                    <th className="px-2 py-4 sm:p-4 font-semibold">User</th>
+                                    <th className="px-2 py-4 sm:p-4 text-center font-semibold">Quotes</th>
+                                    <th className="px-2 py-4 sm:p-4 text-center font-semibold">Likes Received</th>
+                                    <th className="px-2 py-4 sm:p-4 font-semibold">Join Date</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-700">
                                 {userStats.map((user) => (
                                     <tr key={user.id} className="hover:bg-slate-700/40 transition-colors">
-                                        <td className="p-4 flex items-center gap-4">
+                                        <td className="px-2 py-4 sm:p-4 flex items-center gap-4">
                                             <img src={user.avatar} alt={user.name} className="w-10 h-10 rounded-full" />
                                             <span className="font-medium text-white">{user.name}</span>
                                         </td>
-                                        <td className="p-4 text-slate-300 text-center font-mono">{user.quoteCount}</td>
-                                        <td className="p-4 text-slate-300 text-center font-mono">{user.likesReceived}</td>
-                                        <td className="p-4 text-slate-300">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                        <td className="px-2 py-4 sm:p-4 text-slate-300 text-center font-mono">{user.quoteCount}</td>
+                                        <td className="px-2 py-4 sm:p-4 text-slate-300 text-center font-mono">{user.likesReceived}</td>
+                                        <td className="px-2 py-4 sm:p-4 text-slate-300">{new Date(user.createdAt).toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>

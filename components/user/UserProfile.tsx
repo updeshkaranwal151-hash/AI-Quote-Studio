@@ -93,7 +93,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId, setView }) => {
 
   return (
     <>
-      <div className="container mx-auto p-6 animate-fade-in-up">
+      <div className="container mx-auto p-4 sm:p-6 animate-fade-in-up">
         <div className="flex flex-col items-center gap-4 mb-8">
             <img src={user.avatar} alt={user.name} className="w-24 h-24 rounded-full border-4 border-blue-500" />
             <h2 className="text-4xl font-bold text-white">{user.name}</h2>
@@ -131,7 +131,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId, setView }) => {
             <StatCard title="Likes Received" value={totalLikesReceived} />
         </div>
 
-        <h3 className="text-2xl font-bold text-white mb-4 px-6">Quotes by {user.name}</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">Quotes by {user.name}</h3>
 
         <QuoteGrid 
             quotes={userQuotes} 

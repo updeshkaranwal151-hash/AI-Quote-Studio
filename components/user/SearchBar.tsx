@@ -16,13 +16,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const allCategories = ['All', ...CATEGORIES];
 
   return (
-    <div className="px-6 py-4 flex flex-col sm:flex-row items-center gap-4 border-t border-b border-gray-800 mt-6">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
+    <div className="px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center gap-4 border-t border-b border-gray-800 mt-6">
+        <div className="flex flex-wrap items-center gap-2 pb-2 sm:pb-0">
           {allCategories.map((category) => (
               <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 text-sm font-semibold rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors ${
                       activeCategory === category
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-700 text-gray-300 hover:bg-gray-600'

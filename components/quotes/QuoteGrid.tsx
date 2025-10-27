@@ -23,7 +23,7 @@ const QuoteGrid: React.FC<QuoteGridProps> = ({ quotes, likedQuotes, onLike, onCa
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
       {quotes.map((quote) => (
         <QuoteCard 
           key={quote.id} 

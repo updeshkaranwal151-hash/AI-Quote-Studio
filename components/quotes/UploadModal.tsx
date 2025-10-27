@@ -69,10 +69,10 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-fade-in-up" role="dialog" aria-modal="true">
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold text-white">Create a New Quote</h2>
-            <button onClick={onClose} className="text-gray-400 hover:text-white">&times;</button>
+            <button onClick={onClose} className="text-gray-400 hover:text-white text-3xl font-light w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-700 transition-colors">&times;</button>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

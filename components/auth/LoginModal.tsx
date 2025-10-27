@@ -14,7 +14,7 @@ const LoginModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50">
-      <div className="bg-gray-800 rounded-lg shadow-2xl p-8 w-full max-w-md mx-4 animate-fade-in-up">
+      <div className="bg-gray-800 rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-md mx-4 animate-fade-in-up">
         <h2 className="text-3xl font-bold text-white text-center mb-2">Welcome to Quote Studio</h2>
         <p className="text-gray-400 text-center mb-6">Please enter your name to continue.</p>
         <form onSubmit={handleSubmit}>

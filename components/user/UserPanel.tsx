@@ -49,7 +49,7 @@ const UserPanel: React.FC<{ setView: (view: View) => void }> = ({ setView }) => 
   return (
     <>
       <div className="container mx-auto">
-        <div className="px-6 mt-4">
+        <div className="px-4 sm:px-6 mt-4">
             <button 
                 onClick={() => setIsUploadModalOpen(true)}
                 className="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
@@ -67,13 +67,15 @@ const UserPanel: React.FC<{ setView: (view: View) => void }> = ({ setView }) => 
           setSortOption={setSortOption}
         />
 
-        <QuoteGrid 
-            quotes={filteredAndSortedQuotes} 
-            likedQuotes={likedQuotes} 
-            onLike={toggleLike} 
-            onCardClick={setSelectedQuote}
-            onAuthorClick={handleAuthorClick}
-        />
+        <div className="p-4 sm:p-6">
+            <QuoteGrid 
+                quotes={filteredAndSortedQuotes} 
+                likedQuotes={likedQuotes} 
+                onLike={toggleLike} 
+                onCardClick={setSelectedQuote}
+                onAuthorClick={handleAuthorClick}
+            />
+        </div>
       </div>
       {isUploadModalOpen && <UploadModal onClose={() => setIsUploadModalOpen(false)} />}
       {selectedQuote && (

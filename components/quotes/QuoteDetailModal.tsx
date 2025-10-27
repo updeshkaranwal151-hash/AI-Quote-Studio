@@ -41,7 +41,7 @@ const QuoteDetailModal: React.FC<QuoteDetailModalProps> = ({ quote, isLiked, onL
             "{quote.quoteText}"
           </p>
         </div>
-        <div className="w-full md:w-1/2 flex flex-col p-6">
+        <div className="w-full md:w-1/2 flex flex-col p-4 md:p-6">
           <div className="flex justify-between items-start">
             <div>
               <button onClick={() => onAuthorClick(quote.authorId)} className="flex items-center gap-3 group mb-2">

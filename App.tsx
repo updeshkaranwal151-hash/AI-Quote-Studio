@@ -73,7 +73,7 @@ const AppContent: React.FC = () => {
     <div className="min-h-screen bg-gray-900 font-sans flex flex-col">
       <Header setView={setView} />
       <nav className="bg-gray-800/80 backdrop-blur-sm sticky top-[69px] z-30 border-b border-t border-gray-700">
-        <div className="container mx-auto px-6 flex">
+        <div className="container mx-auto px-4 flex">
             <TabButton 
                 label="Quote Gallery" 
                 isActive={view.page === 'gallery' || view.page === 'profile'} 
